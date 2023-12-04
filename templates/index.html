@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Playstore Apps</title>
+</head>
+<body>
+    <h1>Google Playstore App Filter and Sort</h1>
+    <form method="POST">
+        <!-- Allows users to select the category of apps they want -->
+        <h3>Select Categories:</h3>
+        <div style="column-count: 4; border:2px solid  black; padding: 20px 20px 20px 20px;">
+            <!-- Display all the categories provided in the dataframe as checkboxes -->
+            {% for category in categories %}
+                <input type="checkbox" name="selected_categories" value="{{ category }}"> {{ category }}<br>
+            {% endfor %}
+        </div>
+        <br>
+
+        <!-- Allows users to pick the type of currency used for their app -->
+        <h3>Select Currency:</h3>
+        <div style="column-count: 4; border:2px solid  black; padding: 20px 20px 20px 20px;">
+            {% for currency in currencies %}
+                <input type="checkbox" name="selected_currencies" value="{{ currency }}" checked> {{ currency }}<br>
+            {% endfor %}
+        </div>
+        <br>
+
+        <!-- Allows users to pick if they want apps that have in app purchases or not -->
+        <h3>In App Purchases?</h3>
+        <input type="checkbox" id="yes" name="in_app_purchases" value=True checked>
+        <label for="yes">Yes</label><br>
+        <input type="checkbox" id="no" name="in_app_purchases" value=False checked>
+        <label for="no">No</label><br>
+        <br>
+        
+        <!-- Radio buttons used for selecting the type of sorting algorithm -->
+        <h3>Type of Sorting Algorithm to use:</h3>
+        <input type="radio" id="mergesort" name="sort" value="mergesort">
+        <label for="mergesort">Merge Sort</label><br>
+        <input type="radio" id="quicksort" name="sort" value="quicksort" checked>
+        <label for="quicksort">Quick Sort</label><br>
+
+        <!-- Radio buttons used for selecting what value to sort on -->
+        <h3>Sort by:</h3>
+        <input type="radio" id="price_sort" name="sort_by" value="price">
+        <label for="price_sort">Price</label><br>
+        <input type="radio" id="install_sort" name="sort_by" value="install" checked>
+        <label for="install_sort">Installs</label><br>
+        <input type="radio" id="rating_sort" name="sort_by" value="rating" checked>
+        <label for="rating_sort">Rating</label><br>
+
+        <!-- Allows users to choose at least 1 result to display, default is 100 -->
+        <h3>Number of Results to Display:</h3>
+        <input type="number" id="num_res" name="num_res" min="1" value="100"><br>
+        <br>
+
+        <input type="submit" value="Submit">
+        <br>
+    </form>
+    <!-- The resulting table after all operations -->
+    {% if res_df_html %}
+        <!-- Display the number of results and rows in the table as well as the time -->
+        <h2>{{ num_matches }} results in {{ total_time }} seconds, {{ num_rows }} results shown:</h2>
+        <p>Note: only up to 1000 first results are shown for memory purposes</p>
+        {{ res_df_html | safe }}
+    {% endif %}
+</body>
+</html>
